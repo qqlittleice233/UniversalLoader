@@ -1,0 +1,15 @@
+[versions]
+agp = "8.7.1"
+kotlin = "2.0.20"
+xposed-api = "100"
+xposed-service = "100-1.0.0"
+
+
+[libraries]
+classical-xposed-api = { module = "de.robv.android.xposed:api", version = "82" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+

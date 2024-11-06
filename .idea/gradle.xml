@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -9,8 +10,14 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/XposedApi" />
+            <option value="$PROJECT_DIR$/XposedApi/modern" />
+            <option value="$PROJECT_DIR$/XposedApi/modern/api" />
+            <option value="$PROJECT_DIR$/XposedApi/modern/service" />
+            <option value="$PROJECT_DIR$/XposedCompat" />
             <option value="$PROJECT_DIR$/XposedLoader" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/hiddenapi-stub" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

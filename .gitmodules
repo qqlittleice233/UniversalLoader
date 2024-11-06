@@ -1,0 +1,6 @@
+[submodule "XposedApi/modern/api/api"]
+	path = XposedApi/modern/api/api
+	url = https://github.com/libxposed/api.git
+[submodule "XposedApi/modern/service/service"]
+	path = XposedApi/modern/service/service
+	url = https://github.com/libxposed/service.git

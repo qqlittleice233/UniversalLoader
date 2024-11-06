@@ -23,3 +23,7 @@ dependencyResolutionManagement {
 rootProject.name = "UniversalLoader"
 include(":app")
 include(":XposedLoader")
+include(":XposedApi:modern:api")
+include(":XposedApi:modern:service")
+include(":XposedCompat")
+include(":hiddenapi-stub")

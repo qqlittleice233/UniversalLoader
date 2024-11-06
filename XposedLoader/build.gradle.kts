@@ -9,8 +9,6 @@ android {
 
     defaultConfig {
         minSdk = 27
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -27,6 +25,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    packaging {
+        resources {
+            merges += "META-INF/xposed/*"
+            excludes += "**"
+        }
+    }
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -34,5 +38,7 @@ android {
 
 dependencies {
     compileOnly(libs.classical.xposed.api)
-
+    implementation(project(":XposedCompat"))
+    compileOnly(project(":XposedApi:modern:api"))
+    implementation(project(":XposedApi:modern:service"))
 }

@@ -1,11 +1,10 @@
 [versions]
 agp = "8.7.1"
 kotlin = "2.0.20"
-xposed-api = "100"
-xposed-service = "100-1.0.0"
-
+compileSdk = "35"
 
 [libraries]
+androidx-annotation = { module = "androidx.annotation:annotation", version = "1.9.0" }
 classical-xposed-api = { module = "de.robv.android.xposed:api", version = "82" }
 
 [plugins]

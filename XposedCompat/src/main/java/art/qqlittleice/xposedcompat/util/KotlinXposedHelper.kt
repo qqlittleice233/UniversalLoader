@@ -37,7 +37,7 @@ inline fun <T: Executable> Executable.replace( crossinline hooker: (BridgeApi.Be
             override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Method>) {
                 runCatching {
                     hooker(callback as BridgeApi.BeforeMethodInvokedCallback<T>)
-                }.onSuccess { callback.setResult(it) }.onFailure { callback.setThrowable(it) }
+                }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
             }
             override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {}
         })
@@ -45,7 +45,7 @@ inline fun <T: Executable> Executable.replace( crossinline hooker: (BridgeApi.Be
             override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Constructor<*>>) {
                 runCatching {
                     hooker(callback as BridgeApi.BeforeMethodInvokedCallback<T>)
-                }.onSuccess { callback.setResult(it) }.onFailure { callback.setThrowable(it) }
+                }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
             }
             override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Constructor<*>>) {}
         })
@@ -127,7 +127,7 @@ inline fun Class<*>.replaceMethod(methodName: String,  vararg args: Class<*>, cr
         override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Method>) {
             runCatching {
                 hooker.invoke(callback)
-            }.onSuccess { callback.setResult(it) }.onFailure { callback.setThrowable(it) }
+            }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
         }
         override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {}
     })
@@ -172,7 +172,7 @@ inline fun Class<*>.replaceAllMethods(methodName: String,  crossinline hooker: (
         override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Method>) {
             runCatching {
                 hooker.invoke(callback)
-            }.onSuccess { callback.setResult(it) }.onFailure { callback.setThrowable(it) }
+            }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
         }
         override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {}
     })
@@ -224,7 +224,7 @@ inline fun Class<*>.replaceConstructor( vararg args: Class<*>, crossinline hook:
         override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Constructor<*>>) {
             runCatching {
                 hook.invoke(callback)
-            }.onSuccess { callback.setResult(it) }.onFailure { callback.setThrowable(it) }
+            }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
         }
         override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Constructor<*>>) {}
     })

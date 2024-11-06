@@ -31,9 +31,9 @@ object ClassicalApiBridge: BridgeApi {
 
                     override fun getThrowable(): Throwable? = param.throwable
 
-                    override fun setResult(result: Any?) = param.setResult(result)
+                    override fun returnAndSkip(result: Any?) = param.setResult(result)
 
-                    override fun setThrowable(throwable: Throwable?) = param.setThrowable(throwable)
+                    override fun throwAndSkip(throwable: Throwable?) = param.setThrowable(throwable)
                 })
             }
 
@@ -86,9 +86,9 @@ object ClassicalApiBridge: BridgeApi {
 
                     override fun getThrowable(): Throwable? = param.throwable
 
-                    override fun setResult(result: Any?) = param.setResult(result)
+                    override fun returnAndSkip(result: Any?) = param.setResult(result)
 
-                    override fun setThrowable(throwable: Throwable?) = param.setThrowable(throwable)
+                    override fun throwAndSkip(throwable: Throwable?) = param.setThrowable(throwable)
                 })
             }
 

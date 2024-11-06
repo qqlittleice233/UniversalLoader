@@ -25,10 +25,10 @@ public class LSPosedHookerBeforeCallbackProxy implements InvocationHandler {
             case "getResult":
             case "getThrowable":
                 return null;
-            case "setResult":
+            case "returnAndSkip":
                 callback.returnAndSkip(args[0]);
                 return null;
-            case "setThrowable":
+            case "throwAndSkip":
                 callback.throwAndSkip((Throwable) args[0]);
                 return null;
             default:

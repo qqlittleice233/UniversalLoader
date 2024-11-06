@@ -2,7 +2,6 @@ package art.qqlittleice.xposedcompat.transition
 
 import java.lang.reflect.Constructor
 import java.lang.reflect.Executable
-import java.lang.reflect.Member
 import java.lang.reflect.Method
 
 interface BridgeApi {
@@ -56,11 +55,23 @@ interface BridgeApi {
 
     }
 
-    interface BeforeMethodInvokedCallback <T: Executable>: HookerCallback<T>
+    interface BeforeMethodInvokedCallback <T: Executable>: HookerCallback<T> {
 
-    interface AfterMethodInvokedCallback <T: Executable>: HookerCallback<T>
+        fun returnAndSkip(result: Any?)
 
-    interface  HookerCallback <T: Executable> {
+        fun throwAndSkip(throwable: Throwable?)
+
+    }
+
+    interface AfterMethodInvokedCallback <T: Executable>: HookerCallback<T> {
+
+        fun setResult(result: Any?)
+
+        fun setThrowable(throwable: Throwable?)
+
+    }
+
+    interface HookerCallback <T: Executable> {
 
         fun getExecutable(): T
 
@@ -71,10 +82,6 @@ interface BridgeApi {
         fun getResult(): Any?
 
         fun getThrowable(): Throwable?
-
-        fun setResult(result: Any?)
-
-        fun setThrowable(throwable: Throwable?)
 
     }
 

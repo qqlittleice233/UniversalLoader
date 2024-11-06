@@ -1,6 +1,7 @@
 package art.qqlittleice.xposedcompat.transition
 
 import java.lang.reflect.Constructor
+import java.lang.reflect.Executable
 import java.lang.reflect.Member
 import java.lang.reflect.Method
 
@@ -23,21 +24,21 @@ interface BridgeApi {
         const val PRIORITY_HIGHEST: Int = 10000
     }
 
-    fun hook(method: Method, hooker: Hooker): Unhooker<Method>
+    fun hook(method: Method, hooker: Hooker<Method>): Unhooker<Method>
 
-    fun hook(method: Method, priority: Int, hooker: Hooker): Unhooker<Method>
+    fun hook(method: Method, priority: Int, hooker: Hooker<Method>): Unhooker<Method>
 
-    fun hook(constructor: Constructor<*>, hooker: Hooker): Unhooker<Constructor<*>>
+    fun hook(constructor: Constructor<*>, hooker: Hooker<Constructor<*>>): Unhooker<Constructor<*>>
 
-    fun hook(constructor: Constructor<*>, priority: Int, hooker: Hooker): Unhooker<Constructor<*>>
+    fun hook(constructor: Constructor<*>, priority: Int, hooker: Hooker<Constructor<*>>): Unhooker<Constructor<*>>
 
-    fun hookAllMethods(clazz: Class<*>, methodName: String, hooker: Hooker): List<Unhooker<Method>>
+    fun hookAllMethods(clazz: Class<*>, methodName: String, hooker: Hooker<Method>): List<Unhooker<Method>>
 
-    fun hookAllMethods(clazz: Class<*>, methodName: String, priority: Int, hooker: Hooker): List<Unhooker<Method>>
+    fun hookAllMethods(clazz: Class<*>, methodName: String, priority: Int, hooker: Hooker<Method>): List<Unhooker<Method>>
 
-    fun hookAllConstructors(clazz: Class<*>, hooker: Hooker): List<Unhooker<Constructor<*>>>
+    fun hookAllConstructors(clazz: Class<*>, hooker: Hooker<Constructor<*>>): List<Unhooker<Constructor<*>>>
 
-    fun hookAllConstructors(clazz: Class<*>, priority: Int, hooker: Hooker): List<Unhooker<Constructor<*>>>
+    fun hookAllConstructors(clazz: Class<*>, priority: Int, hooker: Hooker<Constructor<*>>): List<Unhooker<Constructor<*>>>
 
     fun invokeOriginal(method: Method, thisObject: Any?, vararg args: Any?): Any?
 
@@ -47,21 +48,21 @@ interface BridgeApi {
 
     fun log(msg: String, throwable: Throwable)
 
-    interface Hooker {
+    interface Hooker <T: Executable> {
 
-        fun beforeMethodInvoked(callback: BeforeMethodInvokedCallback)
+        fun beforeMethodInvoked(callback: BeforeMethodInvokedCallback<T>)
 
-        fun afterMethodInvoked(callback: AfterMethodInvokedCallback)
+        fun afterMethodInvoked(callback: AfterMethodInvokedCallback<T>)
 
     }
 
-    interface BeforeMethodInvokedCallback: HookerCallback
+    interface BeforeMethodInvokedCallback <T: Executable>: HookerCallback<T>
 
-    interface AfterMethodInvokedCallback: HookerCallback
+    interface AfterMethodInvokedCallback <T: Executable>: HookerCallback<T>
 
-    interface HookerCallback {
+    interface  HookerCallback <T: Executable> {
 
-        fun getMember(): Member
+        fun getExecutable(): T
 
         fun getThisObject(): Any?
 
@@ -77,9 +78,9 @@ interface BridgeApi {
 
     }
 
-    interface Unhooker<T : Member> {
+    interface Unhooker<T : Executable> {
 
-        fun getMember(): T
+        fun getExecutable(): T
 
         fun unhook()
 

@@ -15,9 +15,11 @@ class XposedEntry(bridge: UniversalBridge) : UniversalLoader(bridge) {
     ) {
         bridge.log("module path: ${modulePackageParam.modulePath}")
         bridge.log("onPackageLoaded: ${loadedPackageParam.packageName} - ${loadedPackageParam.processName}")
+        
     }
 
     override fun onSystemServerLoaded(systemServerLoadedParam: SystemServerLoadedParam) {
         bridge.log("onSystemServerLoaded: ${systemServerLoadedParam.systemClassLoader}")
     }
+
 }

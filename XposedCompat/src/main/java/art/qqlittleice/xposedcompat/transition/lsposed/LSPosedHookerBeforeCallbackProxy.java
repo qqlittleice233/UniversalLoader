@@ -16,7 +16,7 @@ public class LSPosedHookerBeforeCallbackProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
         switch (method.getName()) {
-            case "getMember":
+            case "getExecutable":
                 return callback.getMember();
             case "getThisObject":
                 return callback.getThisObject();

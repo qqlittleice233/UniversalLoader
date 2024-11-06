@@ -16,21 +16,21 @@ class UniversalBridge private constructor(private val mBridge: BridgeApi) : Brid
         }
     }
 
-    override fun hook(method: Method, hooker: BridgeApi.Hooker): BridgeApi.Unhooker<Method> {
+    override fun hook(method: Method, hooker: BridgeApi.Hooker<Method>): BridgeApi.Unhooker<Method> {
         return mBridge.hook(method, hooker)
     }
 
     override fun hook(
         method: Method,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Method>
     ): BridgeApi.Unhooker<Method> {
         return mBridge.hook(method, priority, hooker)
     }
 
     override fun hook(
         constructor: Constructor<*>,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Constructor<*>>
     ): BridgeApi.Unhooker<Constructor<*>> {
         return mBridge.hook(constructor, hooker)
     }
@@ -38,7 +38,7 @@ class UniversalBridge private constructor(private val mBridge: BridgeApi) : Brid
     override fun hook(
         constructor: Constructor<*>,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Constructor<*>>
     ): BridgeApi.Unhooker<Constructor<*>> {
         return mBridge.hook(constructor, priority, hooker)
     }
@@ -46,7 +46,7 @@ class UniversalBridge private constructor(private val mBridge: BridgeApi) : Brid
     override fun hookAllMethods(
         clazz: Class<*>,
         methodName: String,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Method>
     ): List<BridgeApi.Unhooker<Method>> {
         return mBridge.hookAllMethods(clazz, methodName, hooker)
     }
@@ -55,14 +55,14 @@ class UniversalBridge private constructor(private val mBridge: BridgeApi) : Brid
         clazz: Class<*>,
         methodName: String,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Method>
     ): List<BridgeApi.Unhooker<Method>> {
         return mBridge.hookAllMethods(clazz, methodName, priority, hooker)
     }
 
     override fun hookAllConstructors(
         clazz: Class<*>,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Constructor<*>>
     ): List<BridgeApi.Unhooker<Constructor<*>>> {
         return mBridge.hookAllConstructors(clazz, hooker)
     }
@@ -70,7 +70,7 @@ class UniversalBridge private constructor(private val mBridge: BridgeApi) : Brid
     override fun hookAllConstructors(
         clazz: Class<*>,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Constructor<*>>
     ): List<BridgeApi.Unhooker<Constructor<*>>> {
         return mBridge.hookAllConstructors(clazz, priority, hooker)
     }

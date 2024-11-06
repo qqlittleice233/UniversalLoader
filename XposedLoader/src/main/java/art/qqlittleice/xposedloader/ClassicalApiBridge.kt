@@ -9,19 +9,19 @@ import java.lang.reflect.Method
 
 object ClassicalApiBridge: BridgeApi {
 
-    override fun hook(method: Method, hooker: BridgeApi.Hooker): BridgeApi.Unhooker<Method> {
+    override fun hook(method: Method, hooker: BridgeApi.Hooker<Method>): BridgeApi.Unhooker<Method> {
         return hook(method, BridgeApi.PRIORITY_DEFAULT, hooker)
     }
 
     override fun hook(
         method: Method,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Method>
     ): BridgeApi.Unhooker<Method> {
         val unhook = XposedBridge.hookMethod(method, object : XC_MethodHook(priority) {
             override fun beforeHookedMethod(param: MethodHookParam) {
-                hooker.beforeMethodInvoked(object : BridgeApi.BeforeMethodInvokedCallback {
-                    override fun getMember(): Member = param.method
+                hooker.beforeMethodInvoked(object : BridgeApi.BeforeMethodInvokedCallback<Method> {
+                    override fun getExecutable(): Method = param.method as Method
 
                     override fun getThisObject(): Any? = param.thisObject
 
@@ -38,8 +38,8 @@ object ClassicalApiBridge: BridgeApi {
             }
 
             override fun afterHookedMethod(param: MethodHookParam) {
-                hooker.afterMethodInvoked(object : BridgeApi.AfterMethodInvokedCallback {
-                    override fun getMember(): Member = param.method
+                hooker.afterMethodInvoked(object : BridgeApi.AfterMethodInvokedCallback<Method> {
+                    override fun getExecutable(): Method = param.method as Method
 
                     override fun getThisObject(): Any? = param.thisObject
 
@@ -56,7 +56,7 @@ object ClassicalApiBridge: BridgeApi {
             }
         })
         return object : BridgeApi.Unhooker<Method> {
-            override fun getMember(): Method = method
+            override fun getExecutable(): Method = method
 
             override fun unhook() {
                 unhook.unhook()
@@ -64,19 +64,19 @@ object ClassicalApiBridge: BridgeApi {
         }
     }
 
-    override fun hook(constructor: Constructor<*>, hooker: BridgeApi.Hooker): BridgeApi.Unhooker<Constructor<*>> {
+    override fun hook(constructor: Constructor<*>, hooker: BridgeApi.Hooker<Constructor<*>>): BridgeApi.Unhooker<Constructor<*>> {
         return hook(constructor, BridgeApi.PRIORITY_DEFAULT, hooker)
     }
 
     override fun hook(
         constructor: Constructor<*>,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Constructor<*>>
     ): BridgeApi.Unhooker<Constructor<*>> {
         val unhook = XposedBridge.hookMethod(constructor, object : XC_MethodHook(priority) {
             override fun beforeHookedMethod(param: MethodHookParam) {
-                hooker.beforeMethodInvoked(object : BridgeApi.BeforeMethodInvokedCallback {
-                    override fun getMember(): Member = param.method
+                hooker.beforeMethodInvoked(object : BridgeApi.BeforeMethodInvokedCallback<Constructor<*>> {
+                    override fun getExecutable(): Constructor<*> = param.method as Constructor<*>
 
                     override fun getThisObject(): Any? = param.thisObject
 
@@ -93,8 +93,8 @@ object ClassicalApiBridge: BridgeApi {
             }
 
             override fun afterHookedMethod(param: MethodHookParam) {
-                hooker.afterMethodInvoked(object : BridgeApi.AfterMethodInvokedCallback {
-                    override fun getMember(): Member = param.method
+                hooker.afterMethodInvoked(object : BridgeApi.AfterMethodInvokedCallback<Constructor<*>> {
+                    override fun getExecutable(): Constructor<*> = param.method as Constructor<*>
 
                     override fun getThisObject(): Any? = param.thisObject
 
@@ -111,7 +111,7 @@ object ClassicalApiBridge: BridgeApi {
             }
         })
         return object : BridgeApi.Unhooker<Constructor<*>> {
-            override fun getMember(): Constructor<*> = constructor
+            override fun getExecutable(): Constructor<*> = constructor
 
             override fun unhook() {
                 unhook.unhook()
@@ -122,7 +122,7 @@ object ClassicalApiBridge: BridgeApi {
     override fun hookAllMethods(
         clazz: Class<*>,
         methodName: String,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Method>
     ): List<BridgeApi.Unhooker<Method>> {
         return hookAllMethods(clazz, methodName, BridgeApi.PRIORITY_DEFAULT, hooker)
     }
@@ -131,7 +131,7 @@ object ClassicalApiBridge: BridgeApi {
         clazz: Class<*>,
         methodName: String,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Method>
     ): List<BridgeApi.Unhooker<Method>> {
         val unhookers = mutableListOf<BridgeApi.Unhooker<Method>>()
         val methods = clazz.declaredMethods.filter { it.name == methodName }
@@ -143,7 +143,7 @@ object ClassicalApiBridge: BridgeApi {
 
     override fun hookAllConstructors(
         clazz: Class<*>,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Constructor<*>>
     ): List<BridgeApi.Unhooker<Constructor<*>>> {
         return hookAllConstructors(clazz, BridgeApi.PRIORITY_DEFAULT, hooker)
     }
@@ -151,7 +151,7 @@ object ClassicalApiBridge: BridgeApi {
     override fun hookAllConstructors(
         clazz: Class<*>,
         priority: Int,
-        hooker: BridgeApi.Hooker
+        hooker: BridgeApi.Hooker<Constructor<*>>
     ): List<BridgeApi.Unhooker<Constructor<*>>> {
         val unhookers = mutableListOf<BridgeApi.Unhooker<Constructor<*>>>()
         val constructors = clazz.declaredConstructors

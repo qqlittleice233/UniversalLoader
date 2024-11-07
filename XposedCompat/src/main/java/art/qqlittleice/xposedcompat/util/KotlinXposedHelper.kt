@@ -10,7 +10,7 @@ fun Class<*>.hookMethod(methodName: String, vararg args: Any?) = try {
     if (args.last() !is BridgeApi.Hooker<*>) throw IllegalArgumentException("The last argument must be a Hooker")
     val theHooker = args.last() as BridgeApi.Hooker<Method>
     val clazzArgs = args.dropLast(1)
-    if (clazzArgs.all { (it == null) or (it !is Class<*>) }) throw IllegalArgumentException("The arguments must be Class<?> or not null")
+    if (clazzArgs.isNotEmpty() and clazzArgs.all { (it == null) or (it !is Class<*>) }) throw IllegalArgumentException("The arguments must be Class<?> or not null")
     val method = declaredMethods.firstOrNull { method ->
         (method.name == methodName) and (method.parameterCount == clazzArgs.size) and (method.parameterTypes.zip(clazzArgs).all { (type, arg) -> type == arg })
     } ?: throw NoSuchMethodException("No such method $methodName with ${clazzArgs.size} parameters (${clazzArgs.joinToString { it.toString() }})")
@@ -185,7 +185,7 @@ fun Class<*>.hookConstructor( vararg args: Any?) = try {
     if (args.last() !is BridgeApi.Hooker<*>) throw IllegalArgumentException("The last argument must be a Hooker")
     val theHooker = args.last() as BridgeApi.Hooker<Constructor<*>>
     val clazzArgs = args.dropLast(1)
-    if (clazzArgs.all { (it == null) or (it !is Class<*>) }) throw IllegalArgumentException("The arguments must be Class<?> or not null")
+    if (clazzArgs.isNotEmpty() and clazzArgs.all { (it == null) or (it !is Class<*>) }) throw IllegalArgumentException("The arguments must be Class<?> or not null")
     val constructor = declaredConstructors.firstOrNull { constructor ->
         (constructor.parameterCount == clazzArgs.size) and (constructor.parameterTypes.zip(clazzArgs).all { (type, arg) -> type == arg })
     } ?: throw NoSuchMethodException("No such constructor with ${clazzArgs.size} parameters (${clazzArgs.joinToString { it.toString() }})")

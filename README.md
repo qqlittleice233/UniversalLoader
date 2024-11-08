@@ -6,7 +6,7 @@ Building your own xposed module with both support [Xposed Api](https://github.co
 ### 1. Write your own Xposed Module entry class with extends of UniversalLoader.class
 ### Java
 ```java
-import art.qqlittleice.xposedcompat.transition.UniversalBridge;
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge;
 import art.qqlittleice.xposedloader.UniversalLoader;
 
 public class TestEntry extends UniversalLoader {
@@ -19,7 +19,7 @@ public class TestEntry extends UniversalLoader {
 ```
 ### Kotlin
 ```kotlin
-import art.qqlittleice.xposedcompat.transition.UniversalBridge
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge
 import art.qqlittleice.xposedloader.UniversalLoader
 
 class TestEntry(bridge: UniversalBridge): UniversalLoader(bridge) {
@@ -44,10 +44,10 @@ public abstract class UniversalLoader {
 ```java
 import java.lang.reflect.Method;
 
-import art.qqlittleice.xposedcompat.transition.BridgeApi;
+import art.qqlittleice.xposedcompat.transition.bridge.BridgeApi;
 import art.qqlittleice.xposedcompat.transition.LoadedPackageParam;
 import art.qqlittleice.xposedcompat.transition.ModulePackageParam;
-import art.qqlittleice.xposedcompat.transition.UniversalBridge;
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge;
 import art.qqlittleice.xposedloader.UniversalLoader;
 
 public class TestEntry extends UniversalLoader {
@@ -77,10 +77,10 @@ public class TestEntry extends UniversalLoader {
 ```
 ### Kotlin
 ```kotlin
-import art.qqlittleice.xposedcompat.transition.BridgeApi
+import art.qqlittleice.xposedcompat.transition.bridge.BridgeApi
 import art.qqlittleice.xposedcompat.transition.LoadedPackageParam
 import art.qqlittleice.xposedcompat.transition.ModulePackageParam
-import art.qqlittleice.xposedcompat.transition.UniversalBridge
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge
 import art.qqlittleice.xposedcompat.util.hookMethod
 import art.qqlittleice.xposedloader.UniversalLoader
 import java.lang.reflect.Method

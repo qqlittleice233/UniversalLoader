@@ -20,7 +20,6 @@ public class LSPosedHooker implements XposedInterface.Hooker {
     public static Method afterMethodInvoked;
 
     public static void initMethod() throws NoSuchMethodException {
-
         beforeMethodInvoked = instance.getClass().getDeclaredMethod("beforeMethodInvoked", beforeMethodInvokedCallbackClass);
         afterMethodInvoked = instance.getClass().getDeclaredMethod("afterMethodInvoked", afterMethodInvokedCallbackClass);
     }

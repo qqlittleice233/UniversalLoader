@@ -39,3 +39,4 @@
 -dontwarn io.github.libxposed.api.XposedModuleInterface$ModuleLoadedParam
 -dontwarn io.github.libxposed.api.XposedModuleInterface$PackageLoadedParam
 -dontwarn io.github.libxposed.api.XposedModuleInterface$SystemServerLoadedParam
+-dontwarn io.github.libxposed.api.utils.DexParser

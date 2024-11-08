@@ -34,32 +34,20 @@ fun <T: Executable> Executable.hook( hooker: BridgeApi.Hooker<T>) = try {
 inline fun <T: Executable> Executable.replace( crossinline hooker: (BridgeApi.BeforeMethodInvokedCallback<T>) -> Any?) = try {
     when (this) {
         is Method -> UniversalBridge.get().hook(this, object : BridgeApi.Hooker<Method> {
-            var result: Any? = null
             override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Method>) {
                 runCatching {
                     hooker(callback as BridgeApi.BeforeMethodInvokedCallback<T>)
-                }.onSuccess {
-                    result = it
-                    callback.returnAndSkip(it)
-                }.onFailure { callback.throwAndSkip(it) }
+                }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
             }
-            override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {
-                callback.setResult(result)
-            }
+            override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {}
         })
         is Constructor<*> -> UniversalBridge.get().hook(this, object : BridgeApi.Hooker<Constructor<*>> {
-            var result: Any? = null
             override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Constructor<*>>) {
                 runCatching {
                     hooker(callback as BridgeApi.BeforeMethodInvokedCallback<T>)
-                }.onSuccess {
-                    result = it
-                    callback.returnAndSkip(it)
-                }.onFailure { callback.throwAndSkip(it) }
+                }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
             }
-            override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Constructor<*>>) {
-                callback.setResult(result)
-            }
+            override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Constructor<*>>) {}
         })
         else -> throw IllegalArgumentException("???")
     }
@@ -136,18 +124,12 @@ inline fun Class<*>.hookAfterMethod(methodName: String,  vararg args: Class<*>, 
 
 inline fun Class<*>.replaceMethod(methodName: String,  vararg args: Class<*>, crossinline hooker: (BridgeApi.BeforeMethodInvokedCallback<Method>) -> Any?) = try {
     hookMethod(methodName, *args, object : BridgeApi.Hooker<Method> {
-        var result: Any? = null
         override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Method>) {
             runCatching {
                 hooker.invoke(callback)
-            }.onSuccess {
-                result = it
-                callback.returnAndSkip(it)
-            }.onFailure { callback.throwAndSkip(it) }
+            }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
         }
-        override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {
-            callback.setResult(result)
-        }
+        override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {}
     })
 } catch (e: Throwable) {
     UniversalBridge.get().log("Error when hooking method", e)
@@ -187,18 +169,12 @@ inline fun Class<*>.hookAfterAllMethods(methodName: String,  crossinline hooker:
 
 inline fun Class<*>.replaceAllMethods(methodName: String,  crossinline hooker: (BridgeApi.BeforeMethodInvokedCallback<Method>) -> Any?) = try {
     UniversalBridge.get().hookAllMethods(this, methodName, object : BridgeApi.Hooker<Method> {
-        var result: Any? = null
         override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Method>) {
             runCatching {
                 hooker.invoke(callback)
-            }.onSuccess {
-                result = it
-                callback.returnAndSkip(it)
-            }.onFailure { callback.throwAndSkip(it) }
+            }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
         }
-        override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {
-            callback.setResult(result)
-        }
+        override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Method>) {}
     })
 } catch (e: Throwable) {
     UniversalBridge.get().log("Error when hooking method", e)
@@ -245,18 +221,12 @@ inline fun Class<*>.hookAfterConstructor( vararg args: Class<*>, crossinline hoo
 
 inline fun Class<*>.replaceConstructor( vararg args: Class<*>, crossinline hook: (BridgeApi.BeforeMethodInvokedCallback<Constructor<*>>) -> Any?) = try {
     hookConstructor(*args, object : BridgeApi.Hooker<Constructor<*>> {
-        var result: Any? = null
         override fun beforeMethodInvoked(callback: BridgeApi.BeforeMethodInvokedCallback<Constructor<*>>) {
             runCatching {
                 hook.invoke(callback)
-            }.onSuccess {
-                result = it
-                callback.returnAndSkip(it)
-            }.onFailure { callback.throwAndSkip(it) }
+            }.onSuccess { callback.returnAndSkip(it) }.onFailure { callback.throwAndSkip(it) }
         }
-        override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Constructor<*>>) {
-            callback.setResult(result)
-        }
+        override fun afterMethodInvoked(callback: BridgeApi.AfterMethodInvokedCallback<Constructor<*>>) {}
     })
 } catch (e: Throwable) {
     UniversalBridge.get().log("Error when hooking constructor", e)

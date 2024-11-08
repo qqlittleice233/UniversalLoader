@@ -11,9 +11,7 @@ public class LSPosedHooker implements XposedInterface.Hooker {
     public static Object instance;
 
     public static Class<?> beforeMethodInvokedCallbackClass;
-    public static Object beforeMethodInvokeCallbackProxy;
     public static Class<?> afterMethodInvokedCallbackClass;
-    public static Object afterMethodInvokeCallbackProxy;
     public static ClassLoader moduleClassLoader;
 
     public static Method beforeMethodInvoked;
@@ -25,19 +23,11 @@ public class LSPosedHooker implements XposedInterface.Hooker {
     }
 
     public static Object createBeforeCallbackProxy(XposedInterface.BeforeHookCallback callback) {
-        if (beforeMethodInvokeCallbackProxy != null) {
-            return beforeMethodInvokeCallbackProxy;
-        }
-        beforeMethodInvokeCallbackProxy = Proxy.newProxyInstance(moduleClassLoader, new Class[]{beforeMethodInvokedCallbackClass}, new LSPosedHookerBeforeCallbackProxy(callback));
-        return beforeMethodInvokeCallbackProxy;
+        return Proxy.newProxyInstance(moduleClassLoader, new Class[]{beforeMethodInvokedCallbackClass}, new LSPosedHookerBeforeCallbackProxy(callback));
     }
 
     public static Object createAfterCallbackProxy(XposedInterface.AfterHookCallback callback) {
-        if (afterMethodInvokeCallbackProxy != null) {
-            return afterMethodInvokeCallbackProxy;
-        }
-        afterMethodInvokeCallbackProxy = Proxy.newProxyInstance(moduleClassLoader, new Class[]{afterMethodInvokedCallbackClass}, new LSPosedHookerAfterCallbackProxy(callback));
-        return afterMethodInvokeCallbackProxy;
+        return Proxy.newProxyInstance(moduleClassLoader, new Class[]{afterMethodInvokedCallbackClass}, new LSPosedHookerAfterCallbackProxy(callback));
     }
 
     public static void before(XposedInterface.BeforeHookCallback callback) throws InvocationTargetException, IllegalAccessException {

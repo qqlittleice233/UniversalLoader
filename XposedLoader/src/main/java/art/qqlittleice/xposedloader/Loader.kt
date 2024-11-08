@@ -1,11 +1,12 @@
 package art.qqlittleice.xposedloader
 
 import android.util.Log
+import art.qqlittleice.xposedcompat.transition.ApiLoader
 import art.qqlittleice.xposedcompat.transition.LoadedPackageParam
 import art.qqlittleice.xposedcompat.transition.ModulePackageParam
 import art.qqlittleice.xposedcompat.transition.SystemServerLoadedParam
-import art.qqlittleice.xposedcompat.transition.UniversalBridge
-import art.qqlittleice.xposedcompat.transition.BridgeApi
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge
+import art.qqlittleice.xposedcompat.transition.bridge.BridgeApi
 
 object Loader {
 

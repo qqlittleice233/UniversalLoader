@@ -1,7 +1,7 @@
 package art.qqlittleice.xposedcompat.util
 
-import art.qqlittleice.xposedcompat.transition.BridgeApi
-import art.qqlittleice.xposedcompat.transition.UniversalBridge
+import art.qqlittleice.xposedcompat.transition.bridge.BridgeApi
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge
 import java.lang.reflect.Constructor
 import java.lang.reflect.Executable
 import java.lang.reflect.Method

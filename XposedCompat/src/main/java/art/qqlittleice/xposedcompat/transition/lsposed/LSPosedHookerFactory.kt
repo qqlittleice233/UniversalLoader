@@ -1,6 +1,6 @@
 package art.qqlittleice.xposedcompat.transition.lsposed
 
-import art.qqlittleice.xposedcompat.transition.BridgeApi
+import art.qqlittleice.xposedcompat.transition.bridge.BridgeApi
 import art.qqlittleice.xposedcompat.unsafe.MemoryDexLoader
 import io.github.libxposed.api.XposedInterface
 import java.lang.reflect.Executable

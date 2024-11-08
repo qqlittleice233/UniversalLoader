@@ -1,1 +1,1 @@
--keep class art.qqlittleice.xposedcompat.** { **; }
+-keep class art.qqlittleice.xposedcompat.** { *; }

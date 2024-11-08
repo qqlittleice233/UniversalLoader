@@ -1,9 +1,11 @@
 package art.qqlittleice.xposedloader
 
+import art.qqlittleice.xposedcompat.transition.ApiLoader
 import art.qqlittleice.xposedcompat.transition.LoadedPackageParam
 import art.qqlittleice.xposedcompat.transition.ModulePackageParam
 import art.qqlittleice.xposedcompat.transition.SystemServerLoadedParam
-import art.qqlittleice.xposedcompat.transition.BridgeApi
+import art.qqlittleice.xposedcompat.transition.bridge.BridgeApi
+import art.qqlittleice.xposedcompat.transition.bridge.ModernApiBridge
 import io.github.libxposed.api.XposedInterface
 import io.github.libxposed.api.XposedModule
 import io.github.libxposed.api.XposedModuleInterface

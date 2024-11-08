@@ -19,4 +19,23 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep class art.qqlittleice.xposedloader.UniversalLoader { **; }
+-keep class art.qqlittleice.xposedloader.UniversalLoader { *; }
+-keep class * extends art.qqlittleice.xposedloader.UniversalLoader { *; }
+
+-dontwarn de.robv.android.xposed.IXposedHookLoadPackage
+-dontwarn de.robv.android.xposed.IXposedHookZygoteInit$StartupParam
+-dontwarn de.robv.android.xposed.IXposedHookZygoteInit
+-dontwarn de.robv.android.xposed.XC_MethodHook$MethodHookParam
+-dontwarn de.robv.android.xposed.XC_MethodHook$Unhook
+-dontwarn de.robv.android.xposed.XC_MethodHook
+-dontwarn de.robv.android.xposed.XposedBridge
+-dontwarn de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam
+-dontwarn io.github.libxposed.api.XposedInterface$AfterHookCallback
+-dontwarn io.github.libxposed.api.XposedInterface$BeforeHookCallback
+-dontwarn io.github.libxposed.api.XposedInterface$Hooker
+-dontwarn io.github.libxposed.api.XposedInterface$MethodUnhooker
+-dontwarn io.github.libxposed.api.XposedInterface
+-dontwarn io.github.libxposed.api.XposedModule
+-dontwarn io.github.libxposed.api.XposedModuleInterface$ModuleLoadedParam
+-dontwarn io.github.libxposed.api.XposedModuleInterface$PackageLoadedParam
+-dontwarn io.github.libxposed.api.XposedModuleInterface$SystemServerLoadedParam

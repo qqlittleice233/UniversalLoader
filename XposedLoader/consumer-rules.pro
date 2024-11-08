@@ -1,1 +1,1 @@
--keep class art.qqlittleice.xposedloader.** { **; }
+-keep class art.qqlittleice.xposedloader.** { *; }

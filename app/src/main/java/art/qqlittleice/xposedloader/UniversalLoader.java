@@ -11,7 +11,7 @@ import java.util.Objects;
 import art.qqlittleice.xposedcompat.transition.LoadedPackageParam;
 import art.qqlittleice.xposedcompat.transition.ModulePackageParam;
 import art.qqlittleice.xposedcompat.transition.SystemServerLoadedParam;
-import art.qqlittleice.xposedcompat.transition.UniversalBridge;
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge;
 
 public abstract class UniversalLoader {
 

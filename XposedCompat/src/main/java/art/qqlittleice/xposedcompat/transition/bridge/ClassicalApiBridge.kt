@@ -1,10 +1,9 @@
-package art.qqlittleice.xposedloader
+package art.qqlittleice.xposedcompat.transition.bridge
 
-import art.qqlittleice.xposedcompat.transition.BridgeApi
+import art.qqlittleice.xposedcompat.transition.bridge.BridgeApi
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import java.lang.reflect.Constructor
-import java.lang.reflect.Member
 import java.lang.reflect.Method
 
 object ClassicalApiBridge: BridgeApi {

@@ -33,6 +33,7 @@ android {
 dependencies {
     compileOnly(project(":hiddenapi-stub"))
     compileOnly(project(":XposedApi:modern:api"))
+    compileOnly(libs.classical.xposed.api)
     compileOnly(libs.androidx.annotation)
 
 }

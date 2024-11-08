@@ -1,4 +1,4 @@
-package art.qqlittleice.xposedcompat.transition
+package art.qqlittleice.xposedcompat.transition.bridge
 
 import java.lang.reflect.Constructor
 import java.lang.reflect.Method

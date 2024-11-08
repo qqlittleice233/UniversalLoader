@@ -1,10 +1,13 @@
-package art.qqlittleice.xposedloader
+package art.qqlittleice.xposedcompat.transition.bridge
 
-import art.qqlittleice.xposedcompat.transition.BridgeApi
+import android.content.SharedPreferences
+import android.os.ParcelFileDescriptor
 import art.qqlittleice.xposedcompat.transition.lsposed.LSPosedHookerFactory
 import io.github.libxposed.api.XposedInterface
+import io.github.libxposed.api.utils.DexParser
 import java.lang.reflect.Constructor
 import java.lang.reflect.Method
+import java.nio.ByteBuffer
 
 class ModernApiBridge(private val lsposedBridge: XposedInterface): BridgeApi {
     override fun hook(method: Method, hooker: BridgeApi.Hooker<Method>): BridgeApi.Unhooker<Method> {
@@ -122,6 +125,25 @@ class ModernApiBridge(private val lsposedBridge: XposedInterface): BridgeApi {
         lsposedBridge.invokeOrigin(constructor, thisObject, args)
     }
 
+    fun <T> hookClassInitializer(origin: Class<T>, hooker: BridgeApi.Hooker<Constructor<T>>): BridgeApi.Unhooker<Constructor<T>> {
+        return hookClassInitializer(origin, BridgeApi.PRIORITY_DEFAULT, hooker)
+    }
+
+    fun <T> hookClassInitializer(origin: Class<T>, priority: Int, hooker: BridgeApi.Hooker<Constructor<T>>): BridgeApi.Unhooker<Constructor<T>> {
+        val proxy = LSPosedHookerFactory.createHooker(hooker)
+        val unhook = lsposedBridge.hookClassInitializer(origin, priority, proxy)
+        return object : BridgeApi.Unhooker<Constructor<T>> {
+            override fun getExecutable(): Constructor<T> {
+                return unhook.origin
+            }
+            override fun unhook() {
+                unhook.unhook()
+                LSPosedHookerFactory.requiredDestroy(proxy)
+            }
+
+        }
+    }
+
     override fun log(msg: String) {
         lsposedBridge.log(msg)
     }
@@ -129,4 +151,17 @@ class ModernApiBridge(private val lsposedBridge: XposedInterface): BridgeApi {
     override fun log(msg: String, throwable: Throwable) {
         lsposedBridge.log(msg, throwable)
     }
+
+    fun getRemotePreferences(group: String): SharedPreferences = lsposedBridge.getRemotePreferences(group)
+
+    fun openRemoteFile(name: String): ParcelFileDescriptor = lsposedBridge.openRemoteFile(name)
+
+    fun listRemoteFiles(): Array<String> = lsposedBridge.listRemoteFiles()
+
+    fun parseDex(byteData: ByteBuffer, includeAnnotations: Boolean): DexParser? = lsposedBridge.parseDex(byteData, includeAnnotations)
+
+    fun deoptimize(method: Method): Boolean = lsposedBridge.deoptimize(method)
+
+    fun <T> deoptimize(constructor: Constructor<T>): Boolean = lsposedBridge.deoptimize(constructor)
+
 }

@@ -3,7 +3,7 @@ package com.example.universalloader
 import art.qqlittleice.xposedcompat.transition.LoadedPackageParam
 import art.qqlittleice.xposedcompat.transition.ModulePackageParam
 import art.qqlittleice.xposedcompat.transition.SystemServerLoadedParam
-import art.qqlittleice.xposedcompat.transition.UniversalBridge
+import art.qqlittleice.xposedcompat.transition.bridge.UniversalBridge
 import art.qqlittleice.xposedloader.UniversalLoader
 
 

@@ -1,3 +1,5 @@
+import org.gradle.internal.declarativedsl.parsing.main
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -30,6 +32,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("libs")
+        }
     }
 }
 

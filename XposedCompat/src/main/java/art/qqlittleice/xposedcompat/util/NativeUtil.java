@@ -1,5 +1,7 @@
 package art.qqlittleice.xposedcompat.util;
 
+import java.lang.reflect.Method;
+
 public class NativeUtil {
 
     static {
@@ -17,6 +19,6 @@ public class NativeUtil {
     public int TYPE_FLOAT = 8;
     public int TYPE_DOUBLE = 9;
 
-    public static native Object invokeSpecial(Class<?> clz, String methodName, String methodSign, int callType, Object obj, Object... args);
+    public static native Object invokeSpecial(Class<?> clz, Method method, int callType, Object obj, Object... args);
 
 }

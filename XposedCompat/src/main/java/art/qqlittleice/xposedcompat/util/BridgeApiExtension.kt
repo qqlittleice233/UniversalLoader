@@ -28,7 +28,6 @@ fun BridgeApi.HookerCallback<Method>.invokeSuper(vararg args: Any?): Any? {
     }
     superMethod ?: throw RuntimeException("???")
 
-    val methodSign = DexSignUtil.getMethodSign(method)
     val callType = when(DexSignUtil.getTypeSign(method.returnType)) {
         "V" -> 0 // void
         "Z" -> 2 // boolean
@@ -41,5 +40,5 @@ fun BridgeApi.HookerCallback<Method>.invokeSuper(vararg args: Any?): Any? {
         "D" -> 9 // double
         else -> 1 // Object
     }
-    return NativeUtil.invokeSpecial(superClazz, superMethod.name, methodSign, callType, getThisObject(), *args)
+    return NativeUtil.invokeSpecial(superClazz, superMethod, callType, getThisObject(), *args)
 }

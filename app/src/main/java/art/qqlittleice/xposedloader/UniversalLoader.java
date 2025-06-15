@@ -37,6 +37,7 @@ public abstract class UniversalLoader {
                 Objects.requireNonNull(instance).onPackageLoaded(modulePackageParam, loadedPackageParam);
             } catch (Throwable e) {
                 Log.d(TAG, "onPackageLoaded: " + e.getMessage() + " failed", e);
+                UniversalBridge.get().log("onPackageLoaded: " + e.getMessage() + " failed", e);
             }
         });
 
@@ -56,6 +57,7 @@ public abstract class UniversalLoader {
                 Objects.requireNonNull(instance).onSystemServerLoaded(systemServerLoadedParam);
             } catch (Throwable e) {
                 Log.d(TAG, "onSystemServerLoaded: " + e.getMessage() + " failed", e);
+                UniversalBridge.get().log("onSystemServerLoaded: " + e.getMessage() + " failed", e);
             }
         });
     }

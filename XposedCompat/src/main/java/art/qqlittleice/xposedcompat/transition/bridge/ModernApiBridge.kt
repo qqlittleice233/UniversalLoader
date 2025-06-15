@@ -125,6 +125,22 @@ class ModernApiBridge(private val lsposedBridge: XposedInterface): BridgeApi {
         lsposedBridge.invokeOrigin(constructor, thisObject, args)
     }
 
+    fun invokeSpecial(
+        method: Method,
+        thisObject: Any,
+        vararg args: Any?
+    ): Any? {
+        return lsposedBridge.invokeSpecial(method, thisObject, *args)
+    }
+
+    fun <T : Any> invokeSpecial(
+        constructor: Constructor<T>,
+        thisObject: T,
+        vararg args: Any?
+    ) {
+        return lsposedBridge.invokeSpecial(constructor, thisObject, *args)
+    }
+
     fun <T> hookClassInitializer(origin: Class<T>, hooker: BridgeApi.Hooker<Constructor<T>>): BridgeApi.Unhooker<Constructor<T>> {
         return hookClassInitializer(origin, BridgeApi.PRIORITY_DEFAULT, hooker)
     }

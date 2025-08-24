@@ -1,25 +1,20 @@
-import org.gradle.internal.declarativedsl.parsing.main
-
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.example.universalloader"
+    namespace = "art.qqlittleice.xposedloader"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.universalloader"
         minSdk = 27
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -30,17 +25,20 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    packaging {
+        resources {
+            merges += "META-INF/xposed/*"
+            excludes += "**"
+        }
+    }
     kotlinOptions {
         jvmTarget = "17"
-    }
-    sourceSets {
-        getByName("main") {
-            jniLibs.srcDirs("libs")
-        }
     }
 }
 
 dependencies {
-    runtimeOnly(project(":loader:XposedLoader"))
+    compileOnly(libs.classical.xposed.api)
     implementation(project(":loader:XposedCompat"))
+    compileOnly(project(":loader:XposedApi:modern:api"))
+    implementation(project(":loader:XposedApi:modern:service"))
 }

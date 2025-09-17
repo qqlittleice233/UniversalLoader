@@ -10,6 +10,25 @@ android {
     defaultConfig {
         minSdk = 27
         consumerProguardFiles("consumer-rules.pro")
+        externalNativeBuild {
+            cmake {
+                arguments("-DANDROID_STL=none")
+                val flags = listOf(
+                    "-funwind-tables",
+                    "-fasynchronous-unwind-tables",
+                    "-Qunused-arguments",
+                    "-fno-rtti",
+                    "-fno-exceptions",
+                    "-fvisibility=hidden",
+                    "-fvisibility-inlines-hidden",
+                    "-Wno-unused-value",
+                    "-Wno-unused-variable",
+                    "-Wno-unused-command-line-argument",
+                )
+                cFlags += flags
+                cppFlags += flags
+            }
+        }
     }
 
     buildTypes {
@@ -19,6 +38,26 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            externalNativeBuild {
+                cmake {
+                    val releaseFlags = listOf(
+                        "-ffunction-sections",
+                        "-fdata-sections",
+                        "-Wl,--gc-sections",
+                        "-Wl,--exclude-libs,ALL",
+                        "-Wl,--strip-all",
+                        "-Wl,-z,max-page-size=16384",
+                        "-flto=full",
+                    )
+                    val configFlags = listOf(
+                        "-Oz",
+                        "-DNDEBUG"
+                    ).joinToString(" ")
+                    cFlags += releaseFlags
+                    cppFlags += releaseFlags
+                    arguments("-DCMAKE_BUILD_TYPE=Release", "-DCMAKE_CXX_FLAGS_RELEASE=$configFlags", "-DCMAKE_C_FLAGS_RELEASE=$configFlags")
+                }
+            }
         }
     }
     compileOptions {
@@ -28,6 +67,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    externalNativeBuild {
+        cmake {
+            path("src/main/jni/CMakeLists.txt")
+        }
+    }
+    ndkVersion = "28.2.13676358" // r28c
 }
 
 dependencies {

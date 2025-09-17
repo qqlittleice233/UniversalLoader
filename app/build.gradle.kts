@@ -1,5 +1,3 @@
-import org.gradle.internal.declarativedsl.parsing.main
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -15,6 +13,11 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        externalNativeBuild {
+            cmake {
+                abiFilters("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
+            }
+        }
     }
 
     buildTypes {
@@ -32,11 +35,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
-    }
-    sourceSets {
-        getByName("main") {
-            jniLibs.srcDirs("libs")
-        }
     }
 }
 

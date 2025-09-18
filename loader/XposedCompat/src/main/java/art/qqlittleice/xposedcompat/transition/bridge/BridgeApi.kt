@@ -77,7 +77,7 @@ interface BridgeApi {
 
         fun getThisObject(): Any?
 
-        fun getArgs(): Array<Any>?
+        fun getArgs(): Array<Any?>
 
         fun getResult(): Any?
 

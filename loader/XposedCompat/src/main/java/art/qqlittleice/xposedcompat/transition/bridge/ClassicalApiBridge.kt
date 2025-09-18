@@ -24,7 +24,7 @@ object ClassicalApiBridge: BridgeApi {
 
                     override fun getThisObject(): Any? = param.thisObject
 
-                    override fun getArgs(): Array<Any>? = param.args
+                    override fun getArgs(): Array<Any?> = param.args
 
                     override fun getResult(): Any? = param.result
 
@@ -42,7 +42,7 @@ object ClassicalApiBridge: BridgeApi {
 
                     override fun getThisObject(): Any? = param.thisObject
 
-                    override fun getArgs(): Array<Any>? = param.args
+                    override fun getArgs(): Array<Any?> = param.args
 
                     override fun getResult(): Any? = param.result
 
@@ -79,7 +79,7 @@ object ClassicalApiBridge: BridgeApi {
 
                     override fun getThisObject(): Any? = param.thisObject
 
-                    override fun getArgs(): Array<Any>? = param.args
+                    override fun getArgs(): Array<Any?> = param.args
 
                     override fun getResult(): Any? = param.result
 
@@ -97,7 +97,7 @@ object ClassicalApiBridge: BridgeApi {
 
                     override fun getThisObject(): Any? = param.thisObject
 
-                    override fun getArgs(): Array<Any>? = param.args
+                    override fun getArgs(): Array<Any?> = param.args
 
                     override fun getResult(): Any? = param.result
 
